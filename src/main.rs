@@ -18,7 +18,6 @@ fn main() {
     let mut b: Ball = Ball::new(
         Vec2::new(3., 4.), 
         3., 
-        2., 
         Vec2::new(1., 1.), 
         5.
     );
