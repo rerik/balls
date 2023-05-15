@@ -37,12 +37,17 @@ fn main() {
     let mut window: PistonWindow = 
         WindowSettings::new("Hello Piston!", [640, 480])
         .exit_on_esc(true).build().unwrap();
+    let mut x_pos = 30.0;
     while let Some(e) = window.next() {
         window.draw_2d(&e, |c, g, _device| {
             clear([0.0; 4], g);
-            rectangle([1.0, 0.0, 0.0, 1.0], // red
-                      [0.0, 0.0, 100.0, 100.0],
-                      c.transform, g);
+            // rectangle([1.0, 0.0, 0.0, 1.0], // red
+            //           [0.0, 0.0, 100.0, 100.0],
+            //           c.transform, g);
+            circle_arc([1.0; 4], 15.0, 0.0, f64::_360(), [230.0, x_pos, 30.0, 30.0], c.transform, g)
         });
+        x_pos += 0.1;
+        // let circle = CircleArc::new([1.0; 4], 10.0, 0.0, f64::_360());
+        // circle.draw([10.0, 10.0, 20.0, 20.0], &e, Context.transform, g);
     }
 }
