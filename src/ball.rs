@@ -2,15 +2,18 @@ use std::fmt;
 
 use crate::vec2::Vec2;
 
+extern crate graphics;
+// use graphics::*;
+
 pub struct Ball {
     coords: Vec2,
-    size: f32,
+    size: f64,
     speed:  Vec2,
-    mass: f32,
+    mass: f64,
 }
 
 impl Ball {
-    pub fn new(coords: Vec2, size: f32, speed: Vec2, mass: f32) -> Self {
+    pub fn new(coords: Vec2, size: f64, speed: Vec2, mass: f64) -> Self {
         Self {
             coords,
             size,
@@ -18,11 +21,14 @@ impl Ball {
             mass,
         }
     }
-    pub fn replace(&mut self, shift: Vec2) {
+    pub fn relocate(&mut self, shift: Vec2) {
         self.coords += shift;
     }
-    pub fn mov(&mut self, time: f32) {
+    pub fn mov(&mut self, time: f64) {
         self.coords += self.speed * time;
+    }
+    pub fn rectangle(&mut self) -> [f64; 4] {
+        graphics::rectangle::square(self.coords.x, self.coords.y, self.size/2.)
     }
 }
 

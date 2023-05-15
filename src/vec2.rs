@@ -3,12 +3,12 @@ use std::ops;
 
 #[derive(Copy, Clone)]
 pub struct Vec2 {
-    x: f32,
-    y: f32,
+    pub x: f64,
+    pub y: f64,
 }
 
 impl Vec2 {
-    pub fn new(x: f32, y: f32) -> Self {
+    pub fn new(x: f64, y: f64) -> Self {
         Self { 
             x, 
             y 
@@ -39,10 +39,10 @@ impl ops::AddAssign for Vec2 {
     }
 }
 
-impl ops::Mul<f32> for Vec2 {
+impl ops::Mul<f64> for Vec2 {
     type Output = Self;
 
-    fn mul(self, multiplicator: f32) -> Self {
+    fn mul(self, multiplicator: f64) -> Self {
         Self {
             x: self.x * multiplicator,
             y: self.y * multiplicator,
