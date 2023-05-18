@@ -33,22 +33,12 @@ impl App {
         const BLACK: [f32; 4] = [0.0, 0.0, 0.0, 1.0];
         const WHITE: [f32; 4] = [1.0, 1.0, 1.0, 1.0];
 
-        let circ = circle_arc::CircleArc::new(WHITE, 25.0, 0.0, f64::_360());
-
         self.gl.draw(args.viewport(), |c, gl| {
+
             // Clear the screen.
             clear(BLACK, gl);
 
-            // let transform = c
-            //     .transform
-            //     .trans(x, y)
-            //     .rot_rad(rotation)
-            //     .trans(-25.0, -25.0);
-
-            // // Draw a box rotating around the middle of the screen.
-            // rectangle(RED, square, transform, gl);
-
-            circ.draw(self.ball.rectangle(), &c.draw_state, c.transform, gl)
+            self.ball.draw(c, gl);
         });
         
     }
