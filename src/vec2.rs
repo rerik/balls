@@ -18,7 +18,21 @@ impl Vec2 {
         (self.x*self.x + self.y*self.y).sqrt()
     }
     pub fn projection(&self, other: Vec2) -> f64 {
-        (*self)*other / other.len()
+        println!("Self {}, Other {}, product {}", *self, other, ((*self)* other));
+        ((*self)* other) / other.len()
+    }
+    pub fn set_len(&mut self, len: f64) {
+        *self *= len / self.len();
+    }
+    pub fn reflect(&mut self, line: Vec2, coeff: f64) {
+        let mut proj: Vec2 = line;
+        let proj_len: f64 = self.projection(line);
+        proj.set_len(self.projection(line));
+        // println!("Projection {}", proj_len);
+        println!("Projection vector: {}", proj);
+        let normal: Vec2 = *self - proj;
+        println!("Normal: {}", normal);
+        *self -= normal * 2. * coeff;
     }
 }
 
@@ -56,6 +70,12 @@ impl ops::AddAssign for Vec2 {
     }
 }
 
+impl ops::SubAssign for Vec2 {
+    fn sub_assign(&mut self, other: Self) {
+        *self = *self - other;
+    }
+}
+
 impl ops::Mul<f64> for Vec2 {
     type Output = Self;
 
@@ -64,6 +84,12 @@ impl ops::Mul<f64> for Vec2 {
             x: self.x * multiplicator,
             y: self.y * multiplicator,
         }
+    }
+}
+
+impl ops::MulAssign<f64> for Vec2 {
+    fn mul_assign(&mut self, multiplicator: f64) {
+        *self = *self * multiplicator;
     }
 }
 

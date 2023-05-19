@@ -45,6 +45,10 @@ impl App {
 
     fn update(&mut self, args: &UpdateArgs) {
         self.ball.mov(args.dt);
+        // println!("Speed {}", self.ball.speed);
+        if self.ball.coords.x > 100. {
+            self.ball.speed.reflect(Vec2 { x: 0., y: 1. }, 1.);
+        }
     }
 }
 

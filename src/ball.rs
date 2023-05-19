@@ -9,9 +9,9 @@ use opengl_graphics::GlGraphics;
 // use piston_window::{draw_state, Context};
 
 pub struct Ball {
-    coords: Vec2,
+    pub coords: Vec2,
     size: f64,
-    speed:  Vec2,
+    pub speed:  Vec2,
     mass: f64,
     circle: circle_arc::CircleArc,
 }
