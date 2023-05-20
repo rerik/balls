@@ -19,6 +19,9 @@ use vec2::Vec2;
 mod ball;
 use ball::Ball;
 
+const WIDTH: u32 = 200;
+const HEIGHT: u32 = 200;
+
 pub struct App {
     gl: GlGraphics, // OpenGL drawing backend.
     ball: Ball,
@@ -45,9 +48,17 @@ impl App {
 
     fn update(&mut self, args: &UpdateArgs) {
         self.ball.mov(args.dt);
-        // println!("Speed {}", self.ball.speed);
-        if self.ball.coords.x > 100. {
+        if self.ball.coords.x > WIDTH as f64 {
             self.ball.speed.reflect(Vec2 { x: 0., y: 1. }, 1.);
+        }
+        if self.ball.coords.x < 0. {
+            self.ball.speed.reflect(Vec2 { x: 0., y: 1. }, 1.);
+        }
+        if self.ball.coords.y > HEIGHT as f64 {
+            self.ball.speed.reflect(Vec2 { x: 1., y: 0. }, 1.);
+        }
+        if self.ball.coords.y < 0. {
+            self.ball.speed.reflect(Vec2 { x: 1., y: 0. }, 1.);
         }
     }
 }
@@ -82,7 +93,7 @@ fn main() {
     let opengl = OpenGL::V3_2;
 
     // Create a Glutin window.
-    let mut window: Window = WindowSettings::new("spinning-square", [200, 200])
+    let mut window: Window = WindowSettings::new("spinning-square", [WIDTH, 200])
         .graphics_api(opengl)
         .exit_on_esc(true)
         .build()
@@ -94,7 +105,7 @@ fn main() {
         ball: Ball::new(
             Vec2::new(5., 5.), 
             5., 
-            Vec2::new(30., 10.), 
+            Vec2::new(300., 100.), 
             5.
         ),
     };
