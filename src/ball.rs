@@ -9,9 +9,9 @@ use opengl_graphics::GlGraphics;
 // use piston_window::{draw_state, Context};
 
 pub struct Ball {
-    pub coords: Vec2,
+    coords: Vec2,
     size: f64,
-    pub speed:  Vec2,
+    speed:  Vec2,
     mass: f64,
     circle: circle_arc::CircleArc,
 }
@@ -37,6 +37,23 @@ impl Ball {
     }
     pub fn draw(& self, c: Context, g: &mut GlGraphics) {
         self.circle.draw(self.rectangle(), &c.draw_state, c.transform, g);
+    }
+    pub fn reflect(&mut self, line: Vec2, coeff: f64) {
+        self.speed.reflect(line, coeff);
+    }
+    pub fn check_out_of_scope(&mut self, width: u32, height: u32) {
+        if self.coords.x + self.size > width as f64 {
+            self.reflect(Vec2 { x: 0., y: 1. }, 1.);
+        }
+        if self.coords.x - self.size < 0. {
+            self.reflect(Vec2 { x: 0., y: 1. }, 1.);
+        }
+        if self.coords.y + self.size > height as f64 {
+            self.reflect(Vec2 { x: 1., y: 0. }, 1.);
+        }
+        if self.coords.y - self.size < 0. {
+            self.reflect(Vec2 { x: 1., y: 0. }, 1.);
+        }
     }
 }
 

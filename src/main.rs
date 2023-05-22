@@ -19,8 +19,17 @@ use vec2::Vec2;
 mod ball;
 use ball::Ball;
 
-const WIDTH: u32 = 200;
-const HEIGHT: u32 = 200;
+mod range;
+use range::Range;
+
+const WIDTH: u32 = 1600;
+const HEIGHT: u32 = 900;
+
+const SIZE: Range = Range::new(2., 50.);
+const COORD_X: Range = Range::new(SIZE.max, WIDTH as f64 - SIZE.max);
+const COORD_Y: Range = Range::new(SIZE.max, HEIGHT as f64 - SIZE.max);
+const SPEED: Range = Range::new(10., 500.);
+const MASS: Range = Range::new(1., 10.);
 
 pub struct App {
     gl: GlGraphics, // OpenGL drawing backend.
@@ -34,7 +43,7 @@ impl App {
         // const GREEN: [f32; 4] = [0.0, 1.0, 0.0, 1.0];
         // const RED: [f32; 4] = [1.0, 0.0, 0.0, 1.0];
         const BLACK: [f32; 4] = [0.0, 0.0, 0.0, 1.0];
-        const WHITE: [f32; 4] = [1.0, 1.0, 1.0, 1.0];
+        // const WHITE: [f32; 4] = [1.0, 1.0, 1.0, 1.0];
 
         self.gl.draw(args.viewport(), |c, gl| {
 
@@ -48,52 +57,17 @@ impl App {
 
     fn update(&mut self, args: &UpdateArgs) {
         self.ball.mov(args.dt);
-        if self.ball.coords.x > WIDTH as f64 {
-            self.ball.speed.reflect(Vec2 { x: 0., y: 1. }, 1.);
-        }
-        if self.ball.coords.x < 0. {
-            self.ball.speed.reflect(Vec2 { x: 0., y: 1. }, 1.);
-        }
-        if self.ball.coords.y > HEIGHT as f64 {
-            self.ball.speed.reflect(Vec2 { x: 1., y: 0. }, 1.);
-        }
-        if self.ball.coords.y < 0. {
-            self.ball.speed.reflect(Vec2 { x: 1., y: 0. }, 1.);
-        }
+        self.ball.check_out_of_scope(WIDTH, HEIGHT);
     }
 }
 
 fn main() {
-    // Vec2 tests
-    let mut place: Vec2 = Vec2::new(5., 7.);
-    println!("Place 1: {}", place);
-
-    let shift: Vec2 = Vec2::new(1., 3.);
-
-    place += shift;
-    println!("Place 2: {}", place);
-    println!("Place 3: {}", place * 2.);
-
-    //Ball tests
-    let mut b: Ball = Ball::new(
-        Vec2::new(3., 4.), 
-        3., 
-        Vec2::new(1., 5.), 
-        5.
-    );
-    println!("Ball 1: {}", b);
-
-    b.relocate(Vec2::new(2., 2.));
-    println!("Ball 2: {}", b);
-
-    b.mov(1.);
-    println!("Ball 3: {}", b);
 
     // Change this to OpenGL::V2_1 if not working.
     let opengl = OpenGL::V3_2;
 
     // Create a Glutin window.
-    let mut window: Window = WindowSettings::new("spinning-square", [WIDTH, 200])
+    let mut window: Window = WindowSettings::new("spinning-square", [WIDTH, HEIGHT])
         .graphics_api(opengl)
         .exit_on_esc(true)
         .build()
@@ -101,12 +75,12 @@ fn main() {
 
     // Create a new game and run it.
     let mut app = App {
-        gl: GlGraphics::new(opengl),
+        gl: GlGraphics::new(opengl), 
         ball: Ball::new(
-            Vec2::new(5., 5.), 
-            5., 
-            Vec2::new(300., 100.), 
-            5.
+            Vec2::new(COORD_X.gen(), COORD_Y.gen()), 
+            SIZE.gen(), 
+            Vec2::new(SPEED.gen(), SPEED.gen()), 
+            MASS.gen(),
         ),
     };
 

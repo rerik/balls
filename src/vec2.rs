@@ -18,7 +18,6 @@ impl Vec2 {
         (self.x*self.x + self.y*self.y).sqrt()
     }
     pub fn projection(&self, other: Vec2) -> f64 {
-        println!("Self {}, Other {}, product {}", *self, other, ((*self)* other));
         ((*self)* other) / other.len()
     }
     pub fn set_len(&mut self, len: f64) {
@@ -26,12 +25,8 @@ impl Vec2 {
     }
     pub fn reflect(&mut self, line: Vec2, coeff: f64) {
         let mut proj: Vec2 = line;
-        let proj_len: f64 = self.projection(line);
         proj.set_len(self.projection(line));
-        // println!("Projection {}", proj_len);
-        println!("Projection vector: {}", proj);
         let normal: Vec2 = *self - proj;
-        println!("Normal: {}", normal);
         *self -= normal * 2. * coeff;
     }
 }
