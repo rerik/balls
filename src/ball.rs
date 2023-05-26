@@ -26,9 +26,6 @@ impl Ball {
             circle: circle_arc::CircleArc::new([1.0; 4], size, 0.0, f64::_360())
         }
     }
-    pub fn relocate(&mut self, shift: Vec2) {
-        self.coords += shift;
-    }
     pub fn mov(&mut self, time: f64) {
         self.coords += self.speed * time;
     }
@@ -55,6 +52,14 @@ impl Ball {
             self.reflect(Vec2 { x: 1., y: 0. }, 1.);
         }
     }
+    pub fn pulse(& self) -> Vec2 {
+        self.speed * self.mass
+    }
+    // pub fn collide(&mut self, &mut other: Self) {
+    //     if (self.coords - other.coords).len() <= (self.size + other.size) {
+
+    //     }
+    // }
 }
 
 impl fmt::Display for Ball {
