@@ -32,8 +32,8 @@ const BALLS_NUMBER: usize = 5;
 const SIZE: Range = Range::new(2., 50.);
 const COORD_X: Range = Range::new(SIZE.max, WIDTH as f64 - SIZE.max);
 const COORD_Y: Range = Range::new(SIZE.max, HEIGHT as f64 - SIZE.max);
-// const SPEED: Range = Range::new(10., 500.);
-const SPEED: Range = Range::new(10., 50.);
+const SPEED: Range = Range::new(10., 500.);
+// const SPEED: Range = Range::new(10., 50.);
 const MASS: Range = Range::new(1., 10.);
 
 pub struct App {
