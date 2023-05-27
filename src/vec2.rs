@@ -14,8 +14,11 @@ impl Vec2 {
             y 
         }
     }
+    pub fn len_sqr(&self) -> f64{
+        self.x*self.x + self.y*self.y
+    }
     pub fn len(&self) -> f64{
-        (self.x*self.x + self.y*self.y).sqrt()
+        self.len_sqr().sqrt()
     }
     pub fn projection(&self, other: Vec2) -> f64 {
         ((*self)* other) / other.len()
@@ -55,6 +58,17 @@ impl ops::Sub for Vec2 {
         Self {
             x: self.x - other.x,
             y: self.y - other.y,
+        }
+    }
+}
+
+impl ops::Neg for Vec2 {
+    type Output = Self;
+
+    fn neg(self) -> Self {
+        Self {
+            x: -self.x,
+            y: -self.y,
         }
     }
 }

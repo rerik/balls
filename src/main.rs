@@ -32,7 +32,8 @@ const BALLS_NUMBER: usize = 5;
 const SIZE: Range = Range::new(2., 50.);
 const COORD_X: Range = Range::new(SIZE.max, WIDTH as f64 - SIZE.max);
 const COORD_Y: Range = Range::new(SIZE.max, HEIGHT as f64 - SIZE.max);
-const SPEED: Range = Range::new(10., 500.);
+// const SPEED: Range = Range::new(10., 500.);
+const SPEED: Range = Range::new(10., 50.);
 const MASS: Range = Range::new(1., 10.);
 
 pub struct App {
@@ -66,7 +67,13 @@ impl App {
         for ball in self.balls.iter_mut() {
             ball.mov(args.dt);
             ball.check_out_of_scope(WIDTH, HEIGHT);
-        }        
+        }
+        for i in 0..BALLS_NUMBER {
+            let (start_balls, end_balls) = self.balls.split_at_mut(i+1);
+            for j in 0..BALLS_NUMBER-i-1 {
+                start_balls[i].collide(&mut end_balls[j]);
+            }
+        }  
     }
 }
 

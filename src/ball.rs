@@ -52,14 +52,18 @@ impl Ball {
             self.reflect(Vec2 { x: 1., y: 0. }, 1.);
         }
     }
-    pub fn pulse(& self) -> Vec2 {
-        self.speed * self.mass
+    pub fn collide(&mut self, other: &mut Self) {
+        let distance: Vec2 = self.coords - other.coords;
+        if distance.len() <= (self.size + other.size) {
+            let mass_coef: f64 = 2. / (self.mass + (*other).mass);
+            let speed_diff: Vec2 = self.speed - other.speed;
+            let new_self_speed: Vec2 = self.speed - (distance * (mass_coef*other.mass*(speed_diff*distance)/distance.len_sqr()));
+            let neg_distance: Vec2 = -distance;
+            let new_other_speed: Vec2 = self.speed - (neg_distance * (mass_coef*self.mass*((-speed_diff)*neg_distance)/neg_distance.len_sqr()));
+            self.speed = new_self_speed;
+            other.speed = new_other_speed;
+        }
     }
-    // pub fn collide(&mut self, &mut other: Self) {
-    //     if (self.coords - other.coords).len() <= (self.size + other.size) {
-
-    //     }
-    // }
 }
 
 impl fmt::Display for Ball {
