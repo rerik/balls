@@ -26,11 +26,11 @@ impl Vec2 {
     pub fn set_len(&mut self, len: f64) {
         *self *= len / self.len();
     }
-    pub fn reflect(&mut self, line: Vec2, coeff: f64) {
+    pub fn reflect(&mut self, line: Vec2) {
         let mut proj: Vec2 = line;
         proj.set_len(self.projection(line));
         let normal: Vec2 = *self - proj;
-        *self -= normal * 2. * coeff;
+        *self -= normal * 2.;
     }
 }
 

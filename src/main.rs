@@ -27,14 +27,12 @@ use range::Range;
 const WIDTH: u32 = 800;
 const HEIGHT: u32 = 450;
 
-const BALLS_NUMBER: usize = 5;
+const BALLS_NUMBER: usize = 15;
 
-const SIZE: Range = Range::new(2., 50.);
+const SIZE: Range = Range::new(2., 15.);
 const COORD_X: Range = Range::new(SIZE.max, WIDTH as f64 - SIZE.max);
 const COORD_Y: Range = Range::new(SIZE.max, HEIGHT as f64 - SIZE.max);
 const SPEED: Range = Range::new(10., 500.);
-// const SPEED: Range = Range::new(10., 50.);
-const MASS: Range = Range::new(1., 10.);
 
 pub struct App {
     gl: GlGraphics, // OpenGL drawing backend.
@@ -96,7 +94,6 @@ fn main() {
                 Vec2::new(COORD_X.gen(), COORD_Y.gen()), 
                 SIZE.gen(), 
                 Vec2::new(SPEED.gen(), SPEED.gen()), 
-                MASS.gen(),
         ); BALLS_NUMBER]
     };
 
