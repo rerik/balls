@@ -1,9 +1,3 @@
-// extern crate piston_window;
-
-// use piston_window::*;
-
-use array_macro::array;
-
 extern crate glutin_window;
 extern crate graphics;
 extern crate opengl_graphics;
@@ -33,6 +27,9 @@ const SIZE: Range = Range::new(2., 15.);
 const COORD_X: Range = Range::new(SIZE.max, WIDTH as f64 - SIZE.max);
 const COORD_Y: Range = Range::new(SIZE.max, HEIGHT as f64 - SIZE.max);
 const SPEED: Range = Range::new(10., 500.);
+
+// const SPD: (f64, f64) = (10.0, 500.0);
+// const SPD: std::ops::RangeInclusive<f64> = 10.0..=500.0;
 
 pub struct App {
     gl: GlGraphics, // OpenGL drawing backend.
@@ -81,7 +78,7 @@ fn main() {
     let opengl = OpenGL::V3_2;
 
     // Create a Glutin window.
-    let mut window: Window = WindowSettings::new("spinning-square", [WIDTH, HEIGHT])
+    let mut window: Window = WindowSettings::new("balls", [WIDTH, HEIGHT])
         .graphics_api(opengl)
         .exit_on_esc(true)
         .build()
@@ -89,12 +86,12 @@ fn main() {
 
     // Create a new game and run it.
     let mut app = App {
-        gl: GlGraphics::new(opengl), 
-        balls: array![_ => Ball::new(
-                Vec2::new(COORD_X.gen(), COORD_Y.gen()), 
-                SIZE.gen(), 
-                Vec2::new(SPEED.gen(), SPEED.gen()), 
-        ); BALLS_NUMBER]
+        gl: GlGraphics::new(opengl),
+        balls: core::array::from_fn(|_| Ball::new(
+            Vec2::new(COORD_X.gen(), COORD_Y.gen()), 
+            SIZE.gen(), 
+            Vec2::new(SPEED.gen(), SPEED.gen()), 
+        ))
     };
 
     let mut events = Events::new(EventSettings::new());
